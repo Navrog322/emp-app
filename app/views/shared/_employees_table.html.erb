@@ -1,0 +1,30 @@
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">JMBG</th>
+      <th scope="col">First name</th>
+      <th scope="col">Last name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Position</th>
+      <th scope="col">Employment date</th>
+      <th scope="col">Employment status</th>
+      <th scope="col">Link</th>
+    </tr>
+</thead>
+  <% employees.each do |employee| %>
+    <tr>
+      <th scope="row"><%=employee.id%></th>
+      <td><%= employee.JMBG %></td>
+      <td><%= employee.first_name %></td>
+      <td><%= employee.last_name %></td>
+      <td><%= employee.email %></td>
+      <td><%= employee.address%></td>
+      <td><%= link_to employee.position.name, position_path(employee.position) %></td>
+      <td><%= employee.employment_date %></td>
+      <td><%= link_to employee.employment_status.name, employment_status_path(employee.employment_status)%></td>
+      <td><%= link_to "Show" , employee_path(employee) %></td>
+    </tr>
+    <%end%>
+</table>

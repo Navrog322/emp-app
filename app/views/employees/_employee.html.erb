@@ -34,14 +34,16 @@
     <%= employee.employment_date %>
   </p>
 
+  <%if employee.superior_id != nil%>
   <p>
     <strong>Superior:</strong>
-    <%= employee.superior_id %>
+    <%= link_to(employee.superior.first_name, employee_path(employee.superior_id)) %>
   </p>
+  <% end %>
 
   <p>
     <strong>Employment status:</strong>
-    <%= employee.employment_status_id %>
+    <%= link_to(employee.employment_status.name, employment_status_path(employee.employment_status_id))%>
   </p>
 
 </div>
