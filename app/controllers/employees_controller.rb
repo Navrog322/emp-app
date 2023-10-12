@@ -1,8 +1,8 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ show edit update destroy ]
-  before_action :set_superior_employee_choices, only: %i[ new edit ]
-  before_action :set_position_choices, only: %i[ new edit ]
-  before_action :set_employment_status_choices, only: %i[ new edit ]
+  before_action :set_superior_employee_choices, only: %i[ new edit update destroy create]
+  before_action :set_position_choices, only: %i[ new edit update destroy create]
+  before_action :set_employment_status_choices, only: %i[ new edit update destroy create ]
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
@@ -66,7 +66,6 @@ class EmployeesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_employee
       @employee = Employee.find(params[:id])
-      @employee.touch
     end
 
     def set_superior_employee_choices
