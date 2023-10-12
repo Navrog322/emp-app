@@ -1,10 +1,22 @@
-<p style="color: green"><%= notice %></p>
+<div class="row d-flex justify-content-center">
+  <div class="col-10">
+    <p style="color: green"><%= notice %></p>
 
-<%= render @employment_status %>
+    <%= render @employment_status %>
 
-<div>
-  <%= link_to "Edit this employment status", edit_employment_status_path(@employment_status) %> |
-  <%= link_to "Back to employment statuses", employment_statuses_path %>
+    <%if !@employment_status.employees.empty? %>
+    <p><strong>Employees with this employment status:</strong></p>
+      <%= render partial:"shared/employees_table", locals:{employees: @employment_status.employees}%>
+    <%end%>
+    <div>
 
-  <%= button_to "Destroy this employment status", @employment_status, method: :delete %>
+    <div>
+      <%= link_to "Edit this employment status", edit_employment_status_path(@employment_status) %> |
+      <%= link_to "Back to employment statuses", employment_statuses_path %>
+
+      <%if deletable?(@employment_status)%>
+      <%= button_to "Destroy this employment status", @employment_status, method: :delete %>
+      <%end%>
+    </div>
+  </div>
 </div>

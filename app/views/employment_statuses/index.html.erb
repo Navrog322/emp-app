@@ -1,14 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<div class="row d-flex justify-content-center">
+  <div class="col-4">
+    <p style="color: green"><%= notice %></p>
 
-<h1>Employment statuses</h1>
+    <h1>Employment statuses</h1>
 
-<div id="employment_statuses">
-  <% @employment_statuses.each do |employment_status| %>
-    <%= render employment_status %>
-    <p>
-      <%= link_to "Show this employment status", employment_status %>
-    </p>
-  <% end %>
+    <div id="employment_statuses">
+      <%= render partial: "employment_statuses_table", locals: {statuses: @employment_statuses}%>
+    </div>
+
+    <%= link_to "New employment status", new_employment_status_path %>
+  </div> 
 </div>
-
-<%= link_to "New employment status", new_employment_status_path %>

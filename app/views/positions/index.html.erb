@@ -1,14 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<div class="row d-flex justify-content-center">
+  <div class="col-4">
+    <p style="color: green"><%= notice %></p>
 
-<h1>Positions</h1>
+    <h1>Positions</h1>
 
-<div id="positions">
-  <% @positions.each do |position| %>
-    <%= render position %>
-    <p>
-      <%= link_to "Show this position", position %>
-    </p>
-  <% end %>
-</div>
+    <div id="positions">
+      <%= render partial: "positions_table", locals: {positions: @positions}%>
+    </div>
 
-<%= link_to "New position", new_position_path %>
+    <%= link_to "New position", new_position_path %>
+  <div class="row d-flex justify-content-center">
+<div class="col-4">

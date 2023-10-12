@@ -1,0 +1,26 @@
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Can be a superior?</th>
+      <th scope="col">Number of Employees</th>
+      <th scope="col">Link</th>
+    </tr>
+</thead>
+  <% positions.each do |position| %>
+    <tr>
+      <th scope="row"><%=position.id%></th>
+      <td><%= position.name %></td>
+      <%if position.super %>
+        <td>Yes</td>
+      <%else%>
+        <td>No</td>
+      <% end %>
+      <td><%= position.employees.count %></td>
+      <td><%= link_to "Show", position_path(position.id) %></td>
+      
+      
+    </tr>
+    <%end%>
+</table>

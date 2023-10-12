@@ -1,10 +1,18 @@
-<p style="color: green"><%= notice %></p>
+<div class="row d-flex justify-content-center">
+  <div class="col-8">
+    <p style="color: green"><%= notice %></p>
 
-<%= render @position %>
-
-<div>
-  <%= link_to "Edit this position", edit_position_path(@position) %> |
-  <%= link_to "Back to positions", positions_path %>
-
-  <%= button_to "Destroy this position", @position, method: :delete %>
+    <%= render @position %>
+    <%if !@position.employees.empty? %>
+    <p><strong>Employees with this position:</strong></p>
+      <%= render partial:"shared/employees_table", locals:{employees: @position.employees}%>
+    <%end%>
+    <div>
+      <%= link_to "Edit this position", edit_position_path(@position) %> |
+      <%= link_to "Back to positions", positions_path %>
+      <% if deletable?(@position) %>
+      <%= button_to "Destroy this position", @position, method: :delete %>
+      <% end %>
+    </div>
+  </div>
 </div>

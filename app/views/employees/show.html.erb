@@ -1,10 +1,20 @@
-<p style="color: green"><%= notice %></p>
+<div class="row d-flex justify-content-center">
+  <div class="col-10">
+    <p style="color: green"><%= notice %></p>
 
-<%= render @employee %>
+    <%= render @employee %>
 
-<div>
-  <%= link_to "Edit this employee", edit_employee_path(@employee) %> |
-  <%= link_to "Back to employees", employees_path %>
+    <%if !@employee.subordinates.empty?%>
+    <h2>Subordinates</h2>
+      <%= render partial:"shared/employees_table", locals:{employees: @employee.subordinates}%>
 
-  <%= button_to "Destroy this employee", @employee, method: :delete %>
+    <%end%>
+    
+    <div>
+      <%= link_to "Edit this employee", edit_employee_path(@employee) %> |
+      <%= link_to "Back to employees", employees_path %>
+
+      <%= button_to "Destroy this employee", @employee, method: :delete %>
+    </div>
+  </div>
 </div>

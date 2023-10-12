@@ -1,0 +1,19 @@
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Number of employees</th>
+      <th scope="col">Link</th>
+    </tr>
+</thead>
+  <% statuses.each do |status| %>
+    <tr>
+      <th scope="row"><%=status.id%></th>
+      <td><%= status.name %></td>
+      <td><%= status.employees.count %></td>
+      <td><%= link_to "Show", employment_status_path(status.id) %></td>
+      
+    </tr>
+    <%end%>
+</table>

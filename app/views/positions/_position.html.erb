@@ -3,5 +3,13 @@
     <strong>Name:</strong>
     <%= position.name %>
   </p>
+   <p>
+    <strong>Can be a superior:</strong>
+    <%if position.super %>
+    <%= "Yes" %>
+    <%else%>
+    <%= "No" %>
+    <% end %>
+  </p>
 
 </div>

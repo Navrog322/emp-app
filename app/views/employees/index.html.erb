@@ -1,9 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<div class="row d-flex justify-content-center">
+  <div class="col-10">
+    <p style="color: green"><%= notice %></p>
 
-<h1>Employees</h1>
+    <h1 class="title">Employees</h1>
 
-<div id="employees">
-  <%= render partial: "shared/employees_table", locals: {employees: @employees} %>
+    <div id="employees">
+      <%= render partial: "shared/employees_table", locals: {employees: @employees} %>
+    </div>
+
+    <%= link_to "New employee", new_employee_path %>
+  </div>
 </div>
-
-<%= link_to "New employee", new_employee_path %>

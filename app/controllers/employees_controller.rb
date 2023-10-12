@@ -21,6 +21,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/1/edit
   def edit
+    @superior_employee_choices = @superior_employee_choices.select{|s| s[1]!=@employee.id}
   end
 
   # POST /employees or /employees.json
@@ -80,13 +81,10 @@ class EmployeesController < ApplicationController
     end
 
     def valid_positions_for_superiors_ids
-      positions = Position.where(name: valid_superior_names)
+      positions = Position.where(super: true)
       positions.map { |pos| pos.id}
     end
 
-    def valid_superior_names 
-      ["Senior", "Manager", "Boss"]
-    end
 
 
     # Only allow a list of trusted parameters through.

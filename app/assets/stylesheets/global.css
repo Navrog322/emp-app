@@ -1,3 +1,7 @@
 option{
   height: 40px
 }
+
+.title {
+  text-align: center;
+}
