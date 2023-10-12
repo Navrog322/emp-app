@@ -6,6 +6,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "reset", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "global", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
@@ -15,16 +16,6 @@
       <div class="row">
         <div class="col-12 g-0">
           <%= render partial: 'shared/navigation_bar' %>
-          <div class="alert-wrap alert-fixed">
-            <% flash.each do |message_type, message| %>
-             <div class="<%= "#{message_type} alert alert-dismissible fade show"%>" data-role="alert">
-              <%= message %>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              </div>
-            <% end %>
-          </div>
           <% #flash.each do |key, value|%>
             <%#= content_tag :div, value, class: "flash #{key}"%>
           <%# end %>

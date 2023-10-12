@@ -8,6 +8,7 @@
       <th scope="col">Email</th>
       <th scope="col">Address</th>
       <th scope="col">Position</th>
+      <th scope="col">Superior</th>
       <th scope="col">Employment date</th>
       <th scope="col">Employment status</th>
       <th scope="col">Link</th>
@@ -22,6 +23,11 @@
       <td><%= employee.email %></td>
       <td><%= employee.address%></td>
       <td><%= link_to employee.position.name, position_path(employee.position) %></td>
+      <%if employee.superior_id. != nil%>
+      <td><%= link_to employee.superior.first_name, employee_path(employee.superior_id) %></td>
+      <% else %>
+      <td></td>
+      <%end%>
       <td><%= employee.employment_date %></td>
       <td><%= link_to employee.employment_status.name, employment_status_path(employee.employment_status)%></td>
       <td><%= link_to "Show" , employee_path(employee) %></td>

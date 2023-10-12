@@ -1,6 +1,8 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ show edit update destroy ]
-
+  before_action :set_superior_employee_choices, only: %i[ new edit ]
+  before_action :set_position_choices, only: %i[ new edit ]
+  before_action :set_employment_status_choices, only: %i[ new edit ]
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
@@ -13,6 +15,8 @@ class EmployeesController < ApplicationController
   # GET /employees/new
   def new
     @employee = Employee.new
+    
+
   end
 
   # GET /employees/1/edit
@@ -61,8 +65,28 @@ class EmployeesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_employee
       @employee = Employee.find(params[:id])
+      @employee.touch
     end
 
+    def set_superior_employee_choices
+      @superior_employee_choices = Employee.where(positions: valid_positions_for_superiors_ids).collect {|e| [ e.first_name, e.id ] }
+    end
+
+    def set_position_choices
+      @position_choices = Position.all.collect{|p| [ p.name, p.id ] }
+    end
+    def set_employment_status_choices
+      @employment_status_choices = EmploymentStatus.all.collect{|es| [ es.name, es.id ] }
+    end
+
+    def valid_positions_for_superiors_ids
+      positions = Position.where(name: valid_superior_names)
+      positions.map { |pos| pos.id}
+    end
+
+    def valid_superior_names 
+      ["Senior", "Manager", "Boss"]
+    end
 
 
     # Only allow a list of trusted parameters through.

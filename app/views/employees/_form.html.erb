@@ -11,52 +11,52 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="form-group">
     <%= form.label :JMBG, style: "display: block" %>
-    <%= form.text_field :JMBG %>
+    <%= form.text_field :JMBG, class:"form-control" %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :first_name, style: "display: block" %>
-    <%= form.text_field :first_name %>
+    <%= form.text_field :first_name , class:"form-control"%>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :last_name, style: "display: block" %>
-    <%= form.text_field :last_name %>
+    <%= form.text_field :last_name, class:"form-control" %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, class:"form-control" %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :address, style: "display: block" %>
-    <%= form.text_field :address %>
+    <%= form.text_field :address, class:"form-control" %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :position_id, style: "display: block" %>
-    <%= form.text_field :position_id %>
+    <%= form.select("position_id", @position_choices, {}, { :class => "form-control" }) %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :employment_date, style: "display: block" %>
-    <%= form.date_field :employment_date %>
+    <%= form.date_field :employment_date, class:"form-control" %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :superior_id, style: "display: block" %>
-    <%= form.text_field :superior_id %>
+    <%= form.select("superior_id", @superior_employee_choices, {include_blank: true}, { :class => "form-control" }) %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :employment_status_id, style: "display: block" %>
-    <%= form.text_field :employment_status_id %>
+    <%= form.select("employment_status_id", @employment_status_choices, {}, { :class => "form-control" }) %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-primary" %>
   </div>
 <% end %>
