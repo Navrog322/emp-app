@@ -1,6 +1,7 @@
+<%= content_for(:html_title) { "Editing #{full_name(@employee)}" } %>
 <div class="row d-flex justify-content-center">
   <div class="col-4">
-    <h1>Editing employee</h1>
+    <h1>Editing <%= full_name(@employee) %></h1>
     
     <%= render "form", employee: @employee %>
     

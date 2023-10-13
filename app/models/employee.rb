@@ -14,6 +14,7 @@ class Employee < ApplicationRecord
 
   validates :first_name, presence: true, length: { in: 2..20 }
   validates :last_name, presence: true, length: { in: 2..20 }
+  validates_format_of :first_name, :last_name, with: /\A[a-z]+\z/i
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}\z/, message: "Invalid format" }
 
