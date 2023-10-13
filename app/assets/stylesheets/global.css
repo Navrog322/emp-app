@@ -5,3 +5,22 @@ option{
 .title {
   text-align: center;
 }
+
+h1{
+  text-align: center;
+}
+
+.emp-left{
+}
+
+.emp-right{
+  text-align: right;
+}
+
+.btn{
+  margin: 10px;
+}
+
+.form-control{
+  margin: 3px
+}

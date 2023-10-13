@@ -9,12 +9,16 @@
       <%= render partial:"shared/employees_table", locals:{employees: @employee.subordinates}%>
 
     <%end%>
+    <%if !@employee.projects_under_supervision.empty?%>
+      <h2>Supervising projects</h2>
+        <%= render partial:"shared/projects_table", locals:{projects: @employee.projects_under_supervision}%>
+    <%end%>
     
     <div>
       <%= link_to "Edit this employee", edit_employee_path(@employee) %> |
       <%= link_to "Back to employees", employees_path %>
 
-      <%= button_to "Destroy this employee", @employee, method: :delete %>
+      <%= button_to "Destroy this employee", @employee, method: :delete, class:"btn btn-danger" %>
     </div>
   </div>
 </div>

@@ -1,10 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<div class="row d-flex justify-content-center">
+  <div class="col-8">
+    <p style="color: green"><%= notice %></p>
+    <h1 class="title"><%= @project.name %></h1>
 
-<%= render @project %>
+    <%= render @project %>
 
-<div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
+    <div>
+      <%= link_to "Edit this project", edit_project_path(@project) %> |
+      <%= link_to "Back to projects", projects_path %>
 
-  <%= button_to "Destroy this project", @project, method: :delete %>
+      <%= button_to "Destroy this project", @project, method: :delete, class:"btn btn-danger" %>
+    </div>
+  </div>
 </div>

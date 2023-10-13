@@ -2,12 +2,12 @@
   <div class="col-10">
     <p style="color: green"><%= notice %></p>
     
-    <h1>Projects</h1>
+    <h1 class="title">Projects</h1>
     
     <div id="projects">
       <%= render partial: "shared/projects_table", locals:{projects: @projects}%>
     </div>
     
-    <%= link_to "New project", new_project_path %>
+    <%= link_to "New project", new_project_path %> |
   </div>
 </div>

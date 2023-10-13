@@ -15,7 +15,7 @@
       <%= link_to "Back to employment statuses", employment_statuses_path %>
 
       <%if deletable?(@employment_status)%>
-      <%= button_to "Destroy this employment status", @employment_status, method: :delete %>
+      <%= button_to "Destroy this employment status", @employment_status, method: :delete, class:"btn btn-danger" %>
       <%end%>
     </div>
   </div>

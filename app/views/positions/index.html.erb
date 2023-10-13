@@ -2,13 +2,13 @@
   <div class="col-4">
     <p style="color: green"><%= notice %></p>
 
-    <h1>Positions</h1>
+    <h1 class="title">Positions</h1>
 
     <div id="positions">
       <%= render partial: "positions_table", locals: {positions: @positions}%>
     </div>
 
-    <%= link_to "New position", new_position_path %>
+    <%= link_to "New position", new_position_path %> |
     <% if controller.action_name == "index" %>
     <%= link_to "Show deleted positions", position_ghost_url %>
     <% else %>

@@ -1,49 +1,54 @@
 <div id="<%= dom_id employee %>">
-  <p>
-    <strong>Jmbg:</strong>
-    <%= employee.JMBG %>
-  </p>
+<h1 class="title"><%= full_name(employee) %></h1>
+<div class="row d-flex justify-content-between">
+   <div class="col-3 text-right">
+     <p>
+       <strong>Jmbg:</strong>
+       <%= employee.JMBG %>
+     </p>
 
-  <p>
-    <strong>First name:</strong>
-    <%= employee.first_name %>
-  </p>
+     <p>
+       <strong>First name:</strong>
+       <%= employee.first_name %>
+     </p>
 
-  <p>
-    <strong>Last name:</strong>
-    <%= employee.last_name %>
-  </p>
+     <p>
+       <strong>Last name:</strong>
+       <%= employee.last_name %>
+     </p>
 
-  <p>
-    <strong>Email:</strong>
-    <%= employee.email %>
-  </p>
+     <p>
+       <strong>Email:</strong>
+       <%= employee.email %>
+     </p>
 
-  <p>
-    <strong>Address:</strong>
-    <%= employee.address %>
-  </p>
+     <p>
+       <strong>Address:</strong>
+       <%= employee.address %>
+     </p>
+     </div>
+     <div class="col-3 emp-right">
+     <p>
+       <strong>Position:</strong>
+       <%= link_to(employee.position.name, position_path(employee.position_id)) %>
+     </p>
 
-  <p>
-    <strong>Position:</strong>
-    <%= link_to(employee.position.name, position_path(employee.position_id)) %>
-  </p>
+     <p>
+        <strong>Employment date:</strong>
+        <%= employee.employment_date %>
+      </p>
 
-  <p>
-    <strong>Employment date:</strong>
-    <%= employee.employment_date %>
-  </p>
+      <%if employee.superior_id != nil%>
+        <p>
+          <strong>Superior:</strong>
+            <%= link_to(full_name(employee.superior), employee_path(employee.superior_id)) %>
+        </p>
+      <% end %>
 
-  <%if employee.superior_id != nil%>
-  <p>
-    <strong>Superior:</strong>
-    <%= link_to(full_name(employee.superior), employee_path(employee.superior_id)) %>
-  </p>
-  <% end %>
-
-  <p>
-    <strong>Employment status:</strong>
-    <%= link_to(employee.employment_status.name, employment_status_path(employee.employment_status_id))%>
-  </p>
-
+      <p>
+        <strong>Employment status:</strong>
+        <%= link_to(employee.employment_status.name, employment_status_path(employee.employment_status_id))%>
+      </p>
+      </div>
+  </div>
 </div>

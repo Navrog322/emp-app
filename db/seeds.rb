@@ -65,3 +65,18 @@ end
   #p [first_name, last_name, jmbg, address, date,email, position_id, employment_status_id]
   p emp.errors unless emp.errors.empty?
 end
+
+10.times do 
+  name = Faker::App.name
+  body = Faker::Lorem.paragraph
+  language = Language.pluck(:id).sample
+  supervisor = Employee.pluck(:id).sample
+
+  proj = Project.create({
+    name: name,
+    body: body,
+    language_id: language,
+    supervisor_id: supervisor
+  })
+  p proj.errors unless proj.errors.empty?
+end

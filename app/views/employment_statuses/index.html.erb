@@ -2,13 +2,13 @@
   <div class="col-4">
     <p style="color: green"><%= notice %></p>
 
-    <h1>Employment statuses</h1>
+    <h1 class="title">Employment statuses</h1>
 
     <div id="employment_statuses">
       <%= render partial: "employment_statuses_table", locals: {statuses: @employment_statuses}%>
     </div>
 
-    <%= link_to "New employment status", new_employment_status_path %>
+    <%= link_to "New employment status", new_employment_status_path %> |
     <% if controller.action_name == "index" %>
     <%= link_to "Show deleted employment statuses", employment_status_ghost_url %>
     <% else %>

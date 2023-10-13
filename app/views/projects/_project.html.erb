@@ -15,7 +15,7 @@
   </p>
   <p>
     <strong>Supervisor:</strong>
-    <%= full_name(project.supervisor) %>
+    <%= link_to full_name(project.supervisor), employee_path(project.supervisor) %>
   </p>
 
 </div>

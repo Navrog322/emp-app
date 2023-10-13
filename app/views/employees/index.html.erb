@@ -8,7 +8,7 @@
       <%= render partial: "shared/employees_table", locals: {employees: @employees} %>
     </div>
 
-    <%= link_to "New employee", new_employee_path %>
+    <%= link_to "New employee", new_employee_path %> |
 
     <% if controller.action_name != "ghost" %>
     <%= link_to "Show deleted employees", employee_ghost_url %>
