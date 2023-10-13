@@ -11,7 +11,7 @@ class Employee < ApplicationRecord
   validates :first_name, presence: true, length: { in: 2..20 }
   validates :last_name, presence: true, length: { in: 2..20 }
 
-  validates :email, presence: true, uniqueness: true#, format: { with: /\A[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}\z/, message: "Invalid email format" }
+  validates :email, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}\z/, message: "Invalid format" }
 
   validates :address, presence: true, length: { in: 5..80 }
   validates :position_id, presence: true
