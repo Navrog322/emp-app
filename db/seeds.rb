@@ -33,6 +33,15 @@ EmploymentStatus.create({
 EmploymentStatus.create({
   name:"On Vacation"
 })
+
+
+["Ruby", "Python", "Java", "C++", "C", "Javascript", "Rust", "PHP"].each do |e|
+  Language.create({
+  name: e
+})
+end
+
+
 10.times do
 
   first_name, last_name = Faker::Name.name.split(" ")
@@ -53,6 +62,6 @@ EmploymentStatus.create({
     position_id: position_id,
     employment_status_id: employment_status_id
   })
-  p [first_name, last_name, jmbg, address, date,email, position_id, employment_status_id]
-  p emp.errors
+  #p [first_name, last_name, jmbg, address, date,email, position_id, employment_status_id]
+  p emp.errors unless emp.errors.empty?
 end

@@ -87,7 +87,7 @@ class EmployeesController < ApplicationController
       @employee = Employee.unscoped{Employee.find(params[:id])}
     end
     def set_superior_employee_choices
-      @superior_employee_choices = Employee.where(positions: valid_positions_for_superiors_ids).collect {|e| [ e.first_name, e.id ] }
+      @superior_employee_choices = Employee.where(positions: valid_positions_for_superiors_ids).collect {|e| [ helpers.full_name(e), e.id ] }
     end
 
     def set_position_choices

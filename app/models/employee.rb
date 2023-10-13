@@ -4,6 +4,7 @@ class Employee < ApplicationRecord
   belongs_to :superior, class_name: "Employee", optional:true
   has_many :subordinates, class_name: "Employee", foreign_key:"superior_id"
   belongs_to :employment_status
+  has_many :projects_under_supervision, class_name:"Project", foreign_key:"supervisor_id"
 
   
   include SoftDeletable
@@ -74,6 +75,7 @@ class Employee < ApplicationRecord
       Employee.unscoped{
         if(super.is_deleted == true) 
           super.first_name = "-deleted-"
+          super.last_name = ""
           super
         else 
           return super

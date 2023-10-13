@@ -3,6 +3,6 @@ class Position < ApplicationRecord
 
   include SoftDeletable
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :super, inclusion: { in: [ true, false ] }
 end

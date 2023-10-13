@@ -1,0 +1,21 @@
+<div id="<%= dom_id project %>">
+  <p>
+    <strong>Name:</strong>
+    <%= project.name %>
+  </p>
+
+  <p>
+    <strong>Body:</strong>
+    <%= project.body %>
+  </p>
+
+  <p>
+    <strong>Language:</strong>
+    <%= project.language.name %>
+  </p>
+  <p>
+    <strong>Supervisor:</strong>
+    <%= full_name(project.supervisor) %>
+  </p>
+
+</div>

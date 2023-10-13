@@ -24,7 +24,7 @@
       <td><%= employee.address%></td>
       <td><%= link_to employee.position.name, position_path(employee.position) %></td>
       <%if employee.superior_id. != nil%>
-      <td><%= link_to employee.superior.first_name, employee_path(employee.superior_id) %></td>
+      <td><%= link_to full_name(employee.superior), employee_path(employee.superior_id) %></td>
       <% else %>
       <td></td>
       <%end%>

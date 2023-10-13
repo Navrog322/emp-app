@@ -37,7 +37,7 @@
   <%if employee.superior_id != nil%>
   <p>
     <strong>Superior:</strong>
-    <%= link_to(employee.superior.first_name, employee_path(employee.superior_id)) %>
+    <%= link_to(full_name(employee.superior), employee_path(employee.superior_id)) %>
   </p>
   <% end %>
 
