@@ -1,5 +1,6 @@
 class PositionsController < ApplicationController
   before_action :set_position, only: %i[ edit update destroy ]
+  before_action :set_unscoped_position, only: %i[ show restore ]
 
   # GET /positions or /positions.json
   def index
@@ -9,8 +10,7 @@ class PositionsController < ApplicationController
   # GET /positions/1 or /positions/1.json
   def show
     #@position = Position.find_by(id: params[:id])
-    @position = Position.unscoped{Position.find(params[:id])}
-    redirect_to action: "index" unless @position.is_deleted == false  
+    redirect_to action: "ghost" unless @position.is_deleted == false  
   end
 
   # GET /positions/new
@@ -20,6 +20,18 @@ class PositionsController < ApplicationController
 
   # GET /positions/1/edit
   def edit
+  end
+
+  def ghost 
+    @positions = Position.only_deleted
+    render :index
+  end
+
+  def restore 
+    @position.restore
+    respond_to do |format|
+      format.html { redirect_to position_ghost_url, notice: "position was successfully restored." }
+    end
   end
 
   # POST /positions or /positions.json
@@ -64,6 +76,10 @@ class PositionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_position
       @position = Position.find(params[:id])
+    end
+
+    def set_unscoped_position
+      @position = Position.unscoped{Position.find(params[:id])}
     end
 
     # Only allow a list of trusted parameters through.

@@ -12,7 +12,12 @@
       <th scope="row"><%=status.id%></th>
       <td><%= status.name %></td>
       <td><%= status.employees.count %></td>
-      <td><%= link_to "Show", employment_status_path(status.id) %></td>
+      <%if controller.action_name != "ghost" %>
+      <td class="item-link"><%= link_to "Show", employment_status_path(status.id) %></td>
+      <%else%>
+      <td class="item-link"><%= link_to "Restore", employment_status_restore_url(status.id) %></td>
+      <%end%>
+      
       
     </tr>
     <%end%>

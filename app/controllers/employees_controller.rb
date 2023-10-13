@@ -1,8 +1,9 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: %i[ show edit update destroy ]
+  before_action :set_employee, only: %i[ edit update destroy ]
   before_action :set_superior_employee_choices, only: %i[ new edit update destroy create]
   before_action :set_position_choices, only: %i[ new edit update destroy create]
   before_action :set_employment_status_choices, only: %i[ new edit update destroy create ]
+  before_action :set_unscoped_employee, only: %i[show restore]
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
@@ -10,6 +11,7 @@ class EmployeesController < ApplicationController
 
   # GET /employees/1 or /employees/1.json
   def show
+    redirect_to action: "ghost" unless @employee.is_deleted == false 
   end
 
   # GET /employees/new
@@ -22,6 +24,19 @@ class EmployeesController < ApplicationController
   # GET /employees/1/edit
   def edit
     @superior_employee_choices = @superior_employee_choices.select{|s| s[1]!=@employee.id}
+  end
+
+  def ghost
+    @employees = Employee.only_deleted 
+    render :index
+  end
+
+  def restore
+    @employee.restore
+    respond_to do |format|
+    format.html {redirect_to employee_ghost_url, notice: "Employee was successfully restored."} 
+    end
+    
   end
 
   # POST /employees or /employees.json
@@ -68,6 +83,9 @@ class EmployeesController < ApplicationController
       @employee = Employee.find(params[:id])
     end
 
+    def set_unscoped_employee
+      @employee = Employee.unscoped{Employee.find(params[:id])}
+    end
     def set_superior_employee_choices
       @superior_employee_choices = Employee.where(positions: valid_positions_for_superiors_ids).collect {|e| [ e.first_name, e.id ] }
     end

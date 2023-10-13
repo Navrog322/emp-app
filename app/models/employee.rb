@@ -5,9 +5,8 @@ class Employee < ApplicationRecord
   has_many :subordinates, class_name: "Employee", foreign_key:"superior_id"
   belongs_to :employment_status
 
+  
   include SoftDeletable
-
-  before_destroy :handle_superior_destruction
 
   validates :JMBG, presence: true, format: { with: /\d{13}/,
   message: "needs to have 13 numbers" }
@@ -69,6 +68,17 @@ class Employee < ApplicationRecord
         return super
       end
     }
+  end
+
+  def superior
+      Employee.unscoped{
+        if(super.is_deleted == true) 
+          super.first_name = "-deleted-"
+          super
+        else 
+          return super
+        end
+      }
   end
   
 

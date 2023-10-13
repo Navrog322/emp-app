@@ -30,7 +30,11 @@
       <%end%>
       <td><%= employee.employment_date %></td>
       <td><%= link_to employee.employment_status.name, employment_status_path(employee.employment_status)%></td>
-      <td><%= link_to "Show" , employee_path(employee) %></td>
+      <%if controller.action_name != "ghost" %>
+      <td class="item-link"><%= link_to "Show" , employee_path(employee) %></td>
+      <%else%>
+      <td class="item-link"><%= link_to "Restore", employee_restore_url(employee.id) %></td>
+      <%end%>
     </tr>
     <%end%>
 </table>

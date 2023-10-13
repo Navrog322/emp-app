@@ -9,5 +9,10 @@
     </div>
 
     <%= link_to "New employment status", new_employment_status_path %>
+    <% if controller.action_name == "index" %>
+    <%= link_to "Show deleted employment statuses", employment_status_ghost_url %>
+    <% else %>
+    <%= link_to "Back to employment statuses", employment_statuses_path %>
+    <% end %>
   </div> 
 </div>

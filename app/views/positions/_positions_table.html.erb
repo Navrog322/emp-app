@@ -18,7 +18,11 @@
         <td>No</td>
       <% end %>
       <td><%= position.employees.count %></td>
-      <td><%= link_to "Show", position_path(position.id) %></td>
+      <%if controller.action_name != "ghost" %>
+      <td class="item-link"><%= link_to "Show", position_path(position.id) %></td>
+      <%else%>
+      <td class="item-link"><%= link_to "Restore", position_restore_url(position.id) %></td>
+      <%end%>
       
       
     </tr>
