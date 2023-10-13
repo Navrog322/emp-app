@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_022946) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_13_025440) do
   create_table "employees", force: :cascade do |t|
     t.string "JMBG"
     t.string "first_name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_022946) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_deleted"
   end
 
   create_table "positions", force: :cascade do |t|
@@ -40,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_022946) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "super"
+    t.boolean "is_deleted"
   end
 
   add_foreign_key "employees", "employment_statuses"
