@@ -49,6 +49,29 @@ class Employee < ApplicationRecord
     end
   end
 
+  def position
+    Position.unscoped{
+      if(super.is_deleted == true) 
+        super.name = "-deleted-"
+        super
+      else 
+        return super
+      end
+    }
+  end
+
+  def employment_status
+    EmploymentStatus.unscoped{
+      if(super.is_deleted == true) 
+        super.name = "-deleted-"
+        super
+      else 
+        return super
+      end
+    }
+  end
+  
+
   private
   def handle_superior_destruction
     if !self.subordinates.empty?

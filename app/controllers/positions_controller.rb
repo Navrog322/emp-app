@@ -1,5 +1,5 @@
 class PositionsController < ApplicationController
-  before_action :set_position, only: %i[ show edit update destroy ]
+  before_action :set_position, only: %i[ edit update destroy ]
 
   # GET /positions or /positions.json
   def index
@@ -8,6 +8,9 @@ class PositionsController < ApplicationController
 
   # GET /positions/1 or /positions/1.json
   def show
+    #@position = Position.find_by(id: params[:id])
+    @position = Position.unscoped{Position.find(params[:id])}
+    redirect_to action: "index" unless @position.is_deleted == false  
   end
 
   # GET /positions/new

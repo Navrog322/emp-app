@@ -1,5 +1,5 @@
 class EmploymentStatusesController < ApplicationController
-  before_action :set_employment_status, only: %i[ show edit update destroy ]
+  before_action :set_employment_status, only: %i[edit update destroy ]
 
   # GET /employment_statuses or /employment_statuses.json
   def index
@@ -8,6 +8,8 @@ class EmploymentStatusesController < ApplicationController
 
   # GET /employment_statuses/1 or /employment_statuses/1.json
   def show
+    @employment_status = EmploymentStatus.unscoped{EmploymentStatus.find(params[:id])}
+    redirect_to action: "index" unless @employment_status.is_deleted == false  
   end
 
   # GET /employment_statuses/new

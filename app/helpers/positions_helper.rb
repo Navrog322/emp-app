@@ -1,5 +1,6 @@
 module PositionsHelper
   def deletable? pos
-    pos.employees.empty?
+    #pos.employees.empty?
+    true
   end
 end

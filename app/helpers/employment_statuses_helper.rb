@@ -1,5 +1,6 @@
 module EmploymentStatusesHelper
   def deletable? status
-    status.employees.empty?
+    #status.employees.empty?
+    true
   end
 end
