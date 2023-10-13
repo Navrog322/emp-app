@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy ]
   before_action :set_language_choices, only: %i[ new edit update destroy create]
   before_action :set_supervisor_employee_choices, only: %i[ new edit update destroy create]
-  before_action :set_unscoped_employee, only: %i[show restore]
+  before_action :set_unscoped_project, only: %i[show restore]
 
   # GET /projects or /projects.json
   def index
@@ -20,6 +20,18 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+  end
+
+  def ghost 
+    @projects = Project.only_deleted
+    render :index
+  end
+
+  def restore 
+    @project.restore
+    respond_to do |format|
+      format.html {redirect_to project_ghost_url, notice: "Project was successfully restored."} 
+    end
   end
 
   # POST /projects or /projects.json
@@ -66,8 +78,8 @@ class ProjectsController < ApplicationController
       @project = Project.find(params[:id])
     end
 
-    def set_unscoped_employee
-      @employee = Employee.unscoped{Employee.find(params[:id])}
+    def set_unscoped_project
+      @project = Project.unscoped{Project.find(params[:id])}
     end
 
     def set_supervisor_employee_choices
