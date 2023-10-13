@@ -1,14 +1,13 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Projects</h1>
-
-<div id="projects">
-  <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "Show this project", project %>
-    </p>
-  <% end %>
+<div class="row d-flex justify-content-center">
+  <div class="col-10">
+    <p style="color: green"><%= notice %></p>
+    
+    <h1>Projects</h1>
+    
+    <div id="projects">
+      <%= render partial: "shared/projects_table", locals:{projects: @projects}%>
+    </div>
+    
+    <%= link_to "New project", new_project_path %>
+  </div>
 </div>
-
-<%= link_to "New project", new_project_path %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_112808) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_13_122654) do
   create_table "employees", force: :cascade do |t|
     t.string "JMBG"
     t.string "first_name"
@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_112808) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "supervisor_id", null: false
+    t.boolean "is_deleted"
     t.index ["language_id"], name: "index_projects_on_language_id"
     t.index ["supervisor_id"], name: "index_projects_on_supervisor_id"
   end
