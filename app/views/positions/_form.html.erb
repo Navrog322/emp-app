@@ -1,15 +1,5 @@
 <%= form_with(model: position) do |form| %>
-  <% if position.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(position.errors.count, "error") %> prohibited this position from being saved:</h2>
-
-      <ul>
-        <% position.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%=render partial: "shared/form_errors", locals:{m:position}%>
 
   <div>
     <%= form.label :name, style: "display: block" %>

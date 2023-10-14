@@ -9,7 +9,6 @@ class EmploymentStatusesController < ApplicationController
 
   # GET /employment_statuses/1 or /employment_statuses/1.json
   def show
-    @employment_status = EmploymentStatus.unscoped{EmploymentStatus.find(params[:id])}
     redirect_to action: "ghost" unless @employment_status.is_deleted == false  
   end
 

@@ -1,0 +1,32 @@
+<%= form_with(model: task) do |form| %>
+  <%= render partial: "shared/form_errors", locals:{m:task}%>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :is_completed %>
+    <%= form.check_box :is_completed, class: "form-check-input" %>
+  </div>
+
+  <div>
+    <%= form.label :project_id, style: "display: block" %>
+    <%= form.select :project_id, @project_choices, {}, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :employee_id, style: "display: block" %>
+    <%= form.select :employee_id, @employee_choices, {}, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.submit class:"btn btn-primary" %>
+  </div>
+<% end %>

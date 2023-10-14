@@ -44,7 +44,8 @@ end
 
 10.times do
 
-  first_name, last_name = Faker::Name.name.split(" ")
+  first_name = Faker::Name.first_name 
+  last_name = Faker::Name.last_name 
   jmbg = 13.times.map { rand(10) }.join
   address = Faker::Address.street_address
   date = Faker::Date.between(from: '2014-09-23', to: '2020-09-25')
@@ -79,4 +80,21 @@ end
     supervisor_id: supervisor
   })
   p proj.errors unless proj.errors.empty?
+end
+
+50.times do 
+  name = Faker::Lorem.word
+  body = Faker::Lorem.paragraph
+  is_completed = [true, false].sample
+  employee = Employee.pluck(:id).sample
+  project = Project.pluck(:id).sample
+
+  task = Task.create({
+    name: name,
+    body: body,
+    is_completed: is_completed,
+    employee_id: employee,
+    project_id: project
+  })
+  p task.errors unless task.errors.empty?
 end

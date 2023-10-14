@@ -1,18 +1,5 @@
 <%= form_with(model: employee) do |form| %>
-  <% if employee.errors.any? %>
-    <div class="alert alert-danger alert-dismissible fade show"  role="alert">
-      <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
-
-      <ul>
-        <% employee.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true"></span>
-        </button>
-    </div>
-  <% end %>
+  <%=render partial: "shared/form_errors", locals:{m:employee}%>
 
   <div class="form-group">
     <%= form.label :JMBG, style: "display: block" %>

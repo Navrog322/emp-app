@@ -87,14 +87,14 @@ class EmployeesController < ApplicationController
       @employee = Employee.unscoped{Employee.find(params[:id])}
     end
     def set_superior_employee_choices
-      @superior_employee_choices = Employee.where(positions: valid_positions_for_superiors_ids).collect {|e| [ helpers.full_name(e), e.id ] }
+      @superior_employee_choices = Employee.where(positions: valid_positions_for_superiors_ids).map {|e| [ helpers.full_name(e), e.id ] }
     end
 
     def set_position_choices
-      @position_choices = Position.all.collect{|p| [ p.name, p.id ] }
+      @position_choices = Position.pluck(:name, :id)
     end
     def set_employment_status_choices
-      @employment_status_choices = EmploymentStatus.all.collect{|es| [ es.name, es.id ] }
+      @employment_status_choices = EmploymentStatus.all.map{|es| [ es.name, es.id ] }
     end
 
     def valid_positions_for_superiors_ids

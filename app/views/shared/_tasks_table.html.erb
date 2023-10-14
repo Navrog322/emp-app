@@ -1,0 +1,30 @@
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Completed?</th>
+      <th scope="col">Project</th>
+      <th scope="col">Employee</th>
+      <th scope="col">Link</th>
+    </tr>
+</thead>
+  <% tasks.each do |task| %>
+    <tr>
+      <th scope="row"><%=task.id%></th>
+      <td><%= task.name %></td>
+      <td><%= task.body %></td>
+      <td><%= yes_or_no(task.is_completed) %></td>
+      <td><%= link_to task.project.name, project_path(task.project) %></td>
+      <td><%= link_to full_name(task.employee), employee_path(task.employee) %></td>
+      <%if controller.action_name != "ghost" %>
+      <td class="item-link"><%= link_to "Show", task_path(task.id) %></td>
+      <%else%>
+      <td class="item-link"><%= link_to "Restore", task_restore_url(task.id) %></td>
+      <%end%>
+      
+      
+    </tr>
+    <%end%>
+</table>

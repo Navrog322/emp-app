@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
+  before_action :set_project, only: %i[ edit update destroy ]
   before_action :set_language_choices, only: %i[ new edit update destroy create]
   before_action :set_supervisor_employee_choices, only: %i[ new edit update destroy create]
   before_action :set_unscoped_project, only: %i[show restore]
@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1 or /projects/1.json
   def show
+    redirect_to action: "ghost" unless @project.is_deleted == false 
   end
 
   # GET /projects/new
@@ -83,11 +84,11 @@ class ProjectsController < ApplicationController
     end
 
     def set_supervisor_employee_choices
-      @supervisor_employee_choices = Employee.all.collect{|e| [helpers.full_name(e), e.id]}
+      @supervisor_employee_choices = Employee.all.map{|e| [helpers.full_name(e), e.id]}
     end
 
     def set_language_choices
-      @language_choices = Language.all.collect{|l| [l.name, l.id]}
+      @language_choices = Language.all.pluck(:name, :id)
     end
     # Only allow a list of trusted parameters through.
     def project_params

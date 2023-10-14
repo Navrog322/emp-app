@@ -1,0 +1,27 @@
+<div id="<%= dom_id task %>">
+  <p>
+    <strong>Name:</strong>
+    <%= task.name %>
+  </p>
+
+  <p>
+    <strong>Body:</strong>
+    <%= task.body %>
+  </p>
+
+  <p>
+    <strong>Is completed:</strong>
+    <%= task.is_completed %>
+  </p>
+
+  <p>
+    <strong>Project:</strong>
+    <%= link_to task.project.name, project_path(task.project_id) %>
+  </p>
+
+  <p>
+    <strong>Employee:</strong>
+    <%= link_to full_name(task.employee), employee_path(task.employee_id) %>
+  </p>
+
+</div>

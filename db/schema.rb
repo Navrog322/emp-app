@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_13_122654) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_14_012619) do
   create_table "employees", force: :cascade do |t|
     t.string "JMBG"
     t.string "first_name"
@@ -62,7 +62,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_122654) do
     t.index ["supervisor_id"], name: "index_projects_on_supervisor_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "name"
+    t.text "body"
+    t.boolean "is_completed"
+    t.integer "project_id", null: false
+    t.integer "employee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "is_deleted"
+    t.index ["employee_id"], name: "index_tasks_on_employee_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+  end
+
   add_foreign_key "employees", "employment_statuses"
   add_foreign_key "employees", "positions"
   add_foreign_key "projects", "languages"
+  add_foreign_key "tasks", "employees"
+  add_foreign_key "tasks", "projects"
 end

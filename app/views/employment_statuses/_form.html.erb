@@ -1,15 +1,5 @@
 <%= form_with(model: employment_status) do |form| %>
-  <% if employment_status.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(employment_status.errors.count, "error") %> prohibited this employment_status from being saved:</h2>
-
-      <ul>
-        <% employment_status.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: "shared/form_errors", locals:{m:employment_status}%>
 
   <div>
     <%= form.label :name, style: "display: block" %>

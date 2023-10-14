@@ -9,7 +9,6 @@ class PositionsController < ApplicationController
 
   # GET /positions/1 or /positions/1.json
   def show
-    #@position = Position.find_by(id: params[:id])
     redirect_to action: "ghost" unless @position.is_deleted == false  
   end
 

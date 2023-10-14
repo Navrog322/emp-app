@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tasks
   resources :projects
   resources :employment_statuses
   resources :positions
@@ -8,11 +9,13 @@ Rails.application.routes.draw do
   get 'employment_status/ghost', to: 'employment_statuses#ghost'
   get 'employee/ghost', to:'employees#ghost'
   get 'project/ghost', to:'projects#ghost'
+  get 'task/ghost', to:'tasks#ghost'
 
   get 'position/:id/restore', to:'positions#restore', as: 'position_restore'
   get 'employment_status/:id/restore', to:'employment_statuses#restore', as: 'employment_status_restore'
   get 'employee/:id/restore/', to:'employees#restore', as: 'employee_restore'
   get 'project/:id/restore/', to:'projects#restore', as: 'project_restore'
+  get 'task/:id/restore/', to:'tasks#restore', as: 'task_restore'
 
   root "employees#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

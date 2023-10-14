@@ -5,6 +5,7 @@ class Employee < ApplicationRecord
   has_many :subordinates, class_name: "Employee", foreign_key:"superior_id"
   belongs_to :employment_status
   has_many :projects_under_supervision, class_name:"Project", foreign_key:"supervisor_id"
+  has_many :tasks
 
   
   include SoftDeletable
@@ -20,6 +21,7 @@ class Employee < ApplicationRecord
 
   validates :address, presence: true, length: { in: 5..80 }
   validates :position_id, presence: true
+  validates :employment_status_id, presence: true
   validates :employment_date, presence: true
   validate :date_must_be_in_the_past
   validate :superior_id_must_correspond_to_valid_employee
@@ -52,7 +54,7 @@ class Employee < ApplicationRecord
 
   def position
     Position.unscoped{
-      if(super.is_deleted == true) 
+      if(!super.nil? && super.is_deleted == true) 
         super.name = "-deleted-"
         super
       else 
@@ -63,7 +65,7 @@ class Employee < ApplicationRecord
 
   def employment_status
     EmploymentStatus.unscoped{
-      if(super.is_deleted == true) 
+      if(!super.nil? && super.is_deleted == true) 
         super.name = "-deleted-"
         super
       else 
@@ -73,15 +75,15 @@ class Employee < ApplicationRecord
   end
 
   def superior
-      Employee.unscoped{
-        if(super.is_deleted == true) 
-          super.first_name = "-deleted-"
-          super.last_name = ""
-          super
-        else 
-          return super
-        end
-      }
+    Employee.unscoped{
+      if(!super.nil? && super.is_deleted == true) 
+        super.first_name = "-deleted-"
+        super.last_name = ""
+        super
+      else 
+        return super
+      end
+    }
   end
   
 

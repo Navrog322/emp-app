@@ -6,6 +6,11 @@
 
     <%= render @project %>
 
+    <%if !@project.tasks.empty?%>
+      <h2>Tasks for this project</h2>
+        <%= render partial:"shared/tasks_table", locals:{tasks: @project.tasks}%>
+    <%end%>
+
     <div>
       <%= link_to "Edit this project", edit_project_path(@project) %> |
       <%= link_to "Back to projects", projects_path %>

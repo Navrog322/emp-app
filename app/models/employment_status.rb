@@ -3,5 +3,5 @@ class EmploymentStatus < ApplicationRecord
 
   include SoftDeletable
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true, length: { in: 2..20 }
 end
