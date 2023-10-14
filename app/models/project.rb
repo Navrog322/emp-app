@@ -1,4 +1,7 @@
 class Project < ApplicationRecord
+
+  paginates_per 10
+  
   belongs_to :language
   belongs_to :supervisor, class_name: "Employee"
   has_many :tasks

@@ -2,6 +2,7 @@ class Task < ApplicationRecord
   belongs_to :project
   belongs_to :employee
 
+  paginates_per 10
   include SoftDeletable
 
   def project 

@@ -7,6 +7,7 @@
 
     <div id="employees">
       <%= render partial: "shared/employees_table", locals: {employees: @employees} %>
+      <%= paginate @employees, window: 2 %> 
     </div>
 
     <%= link_to "New employee", new_employee_path %> |

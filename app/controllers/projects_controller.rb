@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.all.page(params[:page])
   end
 
   # GET /projects/1 or /projects/1.json
@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
   end
 
   def ghost 
-    @projects = Project.only_deleted
+    @projects = Project.only_deleted.page(params[:page])
     render :index
   end
 

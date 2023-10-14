@@ -1,5 +1,7 @@
 class Employee < ApplicationRecord
 
+  paginates_per 10
+
   belongs_to :position
   belongs_to :superior, class_name: "Employee", optional:true
   has_many :subordinates, class_name: "Employee", foreign_key:"superior_id"

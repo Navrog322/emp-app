@@ -6,7 +6,7 @@ class EmployeesController < ApplicationController
   before_action :set_unscoped_employee, only: %i[show restore]
   # GET /employees or /employees.json
   def index
-    @employees = Employee.all
+    @employees = Employee.all.page(params[:page])
   end
 
   # GET /employees/1 or /employees/1.json
@@ -27,7 +27,7 @@ class EmployeesController < ApplicationController
   end
 
   def ghost
-    @employees = Employee.only_deleted 
+    @employees = Employee.only_deleted.page(params[:page])
     render :index
   end
 

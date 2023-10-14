@@ -7,6 +7,7 @@
     
     <div id="projects">
       <%= render partial: "shared/projects_table", locals:{projects: @projects}%>
+      <%= paginate @projects, window: 2 %> 
     </div>
     
     <%= link_to "New project", new_project_path %> |

@@ -25,3 +25,7 @@ h1, h2, h3{
 .form-control{
   margin: 3px
 }
+nav.pagination{
+  justify-content: flex-start;
+  gap: 10px;
+}

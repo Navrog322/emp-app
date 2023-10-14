@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = Task.all.page(params[:page]) 
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -24,7 +24,7 @@ class TasksController < ApplicationController
   end
 
   def ghost 
-    @tasks = Task.only_deleted 
+    @tasks = Task.only_deleted.page(params[:page]) 
     render :index 
   end
 

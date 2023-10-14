@@ -42,7 +42,7 @@ EmploymentStatus.create({
 end
 
 
-10.times do
+20.times do
 
   first_name = Faker::Name.first_name 
   last_name = Faker::Name.last_name 
@@ -67,7 +67,7 @@ end
   p emp.errors unless emp.errors.empty?
 end
 
-10.times do 
+40.times do 
   name = Faker::App.name
   body = Faker::Lorem.paragraph
   language = Language.pluck(:id).sample
@@ -82,7 +82,7 @@ end
   p proj.errors unless proj.errors.empty?
 end
 
-50.times do 
+100.times do 
   name = Faker::Lorem.word
   body = Faker::Lorem.paragraph
   is_completed = [true, false].sample
