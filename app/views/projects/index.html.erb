@@ -4,6 +4,20 @@
     <p style="color: green"><%= notice %></p>
     
     <h1 class="title">Projects</h1>
+
+    <% search_url = controller.action_name != "ghost" ? projects_path : project_ghost_url%>
+    <div class="row">
+      <div class="col-3">
+        <%= form_with(url: search_url, method: :get) do |form| %>
+
+        <%= form.label :query, "Search by project name:", class: "block mb-2" %>
+
+        <%= form.text_field :query, class: "form-control", autocomplete: "off" %>
+
+        <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
+        <% end %>
+      </div>
+    </div>
     
     <div id="projects">
       <%= render partial: "shared/projects_table", locals:{projects: @projects}%>

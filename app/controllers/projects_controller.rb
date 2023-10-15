@@ -1,12 +1,19 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ edit update destroy ]
-  before_action :set_language_choices, only: %i[ new edit update destroy create]
-  before_action :set_supervisor_employee_choices, only: %i[ new edit update destroy create]
-  before_action :set_unscoped_project, only: %i[show restore]
+  before_action :set_language_choices, only: %i[ new edit update destroy create ]
+  before_action :set_supervisor_employee_choices, only: %i[ new edit update destroy create ]
+  before_action :set_unscoped_project, only: %i[ show restore ]
+
+  
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all.page(params[:page])
+    if params[:query].present?
+      @projects = search(params[:query], only_deleted_flag: false)
+    else
+      @projects = Project.all
+    end
+    @projects = @projects.page(params[:page])
   end
 
   # GET /projects/1 or /projects/1.json
@@ -24,7 +31,12 @@ class ProjectsController < ApplicationController
   end
 
   def ghost 
-    @projects = Project.only_deleted.page(params[:page])
+    if params[:query].present?
+      @projects = search(params[:query], only_deleted_flag: true)
+    else
+      @projects = Project.only_deleted
+    end
+    @projects = @projects.page(params[:page])
     render :index
   end
 
@@ -73,7 +85,13 @@ class ProjectsController < ApplicationController
     end
   end
 
+    
+
+  
+
   private
+
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
@@ -90,6 +108,16 @@ class ProjectsController < ApplicationController
     def set_language_choices
       @language_choices = Language.all.pluck(:name, :id)
     end
+
+    def search(q, options={only_deleted_flag: false})
+      if options[:only_deleted_flag]
+        Project.only_deleted.where("name LIKE ?", "%#{q}%")
+      else
+        Project.where("name LIKE ?", "%#{q}%")
+      end
+    end
+    
+
     # Only allow a list of trusted parameters through.
     def project_params
       params.require(:project).permit(:name, :body, :language_id, :supervisor_id)

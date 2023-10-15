@@ -5,6 +5,20 @@
   <div class="col-10">
     <h1>Tasks</h1>
 
+    <% search_url = controller.action_name != "ghost" ? tasks_path : task_ghost_url%>
+    <div class="row">
+      <div class="col-3">
+        <%= form_with(url: search_url, method: :get) do |form| %>
+
+        <%= form.label :query, "Search by task name:", class: "block mb-2" %>
+
+        <%= form.text_field :query, class: "form-control", autocomplete: "off" %>
+
+        <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
+        <% end %>
+      </div>
+    </div>
+
     <div id="tasks">
       <%= render partial: "shared/tasks_table", locals:{tasks:@tasks}%>
        <%= paginate @tasks, window: 2 %> 

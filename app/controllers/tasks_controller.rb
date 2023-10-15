@@ -6,7 +6,12 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all.page(params[:page]) 
+    if params[:query].present?
+      @tasks = search(params[:query], only_deleted_flag: false)
+    else
+      @tasks = Task.all
+    end
+    @tasks = @tasks.page(params[:page])
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -23,9 +28,14 @@ class TasksController < ApplicationController
   def edit
   end
 
-  def ghost 
-    @tasks = Task.only_deleted.page(params[:page]) 
-    render :index 
+  def ghost
+    if params[:query].present?
+      @tasks = search(params[:query], only_deleted_flag: true)
+    else
+      @tasks = Task.only_deleted
+    end
+    @tasks = @tasks.page(params[:page])
+    render :index
   end
 
   def restore 
@@ -89,6 +99,14 @@ class TasksController < ApplicationController
 
     def set_employee_choices
       @employee_choices = Employee.all.map{|e| [helpers.full_name(e), e.id]}
+    end
+
+    def search q, options={only_deleted_flag: false}
+      if options[:only_deleted_flag]
+        Task.only_deleted.where("name LIKE ?", "%#{q}%")
+      else
+        Task.where("name LIKE ?", "%#{q}%")
+      end
     end
 
     # Only allow a list of trusted parameters through.

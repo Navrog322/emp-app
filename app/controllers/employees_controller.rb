@@ -1,17 +1,27 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ edit update destroy ]
   before_action :set_superior_employee_choices, only: %i[ new edit update destroy create]
-  before_action :set_position_choices, only: %i[ new edit update destroy create]
-  before_action :set_employment_status_choices, only: %i[ new edit update destroy create ]
+  before_action :set_position_choices
+  before_action :set_employment_status_choices
   before_action :set_unscoped_employee, only: %i[show restore]
   # GET /employees or /employees.json
   def index
-    @employees = Employee.all.page(params[:page])
+    data = {first_name: is_like(params[:first_name]), last_name: is_like(params[:last_name])} 
+  
+    @employees = search(data, {only_deleted_flag: false})
+    if params[:position_id].present?
+      @employees = @employees.joins(:position).where("positions.id = ?", params[:position_id])
+    end
+    if params[:employment_status_id].present?
+      @employees = @employees.joins(:employment_status).where("employment_statuses.id = ?", params[:employment_status_id])
+    end
+    #@employees = @employees.joins(:employment_status).where("employment_statuses.name = ?", "Active")
+    @employees = @employees.page(params[:page])
   end
 
   # GET /employees/1 or /employees/1.json
   def show
-    redirect_to action: "ghost" unless @employee.is_deleted == false 
+    redirect_to action: "ghost" if @employee.is_deleted
   end
 
   # GET /employees/new
@@ -27,7 +37,17 @@ class EmployeesController < ApplicationController
   end
 
   def ghost
-    @employees = Employee.only_deleted.page(params[:page])
+    data = {first_name: is_like(params[:first_name]), last_name: is_like(params[:last_name])} 
+  
+    @employees = search(data, {only_deleted_flag: true})
+    if params[:position_id].present?
+      @employees = @employees.joins(:position).where("positions.id = ?", params[:position_id])
+    end
+    if params[:employment_status_id].present?
+      @employees = @employees.joins(:employment_status).where("employment_statuses.id = ?", params[:employment_status_id])
+    end
+    #@employees = @employees.joins(:employment_status).where("employment_statuses.name = ?", "Active")
+    @employees = @employees.page(params[:page])
     render :index
   end
 
@@ -86,6 +106,7 @@ class EmployeesController < ApplicationController
     def set_unscoped_employee
       @employee = Employee.unscoped{Employee.find(params[:id])}
     end
+
     def set_superior_employee_choices
       @superior_employee_choices = Employee.where(positions: valid_positions_for_superiors_ids).map {|e| [ helpers.full_name(e), e.id ] }
     end
@@ -93,6 +114,7 @@ class EmployeesController < ApplicationController
     def set_position_choices
       @position_choices = Position.pluck(:name, :id)
     end
+    
     def set_employment_status_choices
       @employment_status_choices = EmploymentStatus.all.map{|es| [ es.name, es.id ] }
     end
@@ -100,6 +122,14 @@ class EmployeesController < ApplicationController
     def valid_positions_for_superiors_ids
       positions = Position.where(super: true)
       positions.map { |pos| pos.id}
+    end
+
+    def search data, options={only_deleted_flag: false}
+      if options[:only_deleted_flag]
+        Employee.only_deleted.where(["first_name LIKE :first_name and last_name LIKE :last_name", data])
+      else
+        Employee.where(["first_name LIKE :first_name and last_name LIKE :last_name", data])
+      end
     end
 
 
