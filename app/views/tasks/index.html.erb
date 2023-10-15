@@ -10,9 +10,23 @@
       <div class="col-3">
         <%= form_with(url: search_url, method: :get) do |form| %>
 
-        <%= form.label :query, "Search by task name:", class: "block mb-2" %>
+        <div class="form-group">
+          <%= form.label :name, "Name", class: "block mb-2" %>
+          <%= form.text_field :name, class: "form-control", autocomplete: "off" %>
+        </div>
 
-        <%= form.text_field :query, class: "form-control", autocomplete: "off" %>
+        <div class="form-group">
+          <%= form.label "Is completed?" %>
+          <%= form.select :is_completed, [["Choose", ""], ["Yes", 1], ["No", 0]],{}, class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <%= form.label :body, style: "display: block" %>
+          <%= form.text_area :body, class: "form-control" %>
+        </div>
+
+        
 
         <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
         <% end %>

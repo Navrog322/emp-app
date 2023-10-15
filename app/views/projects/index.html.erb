@@ -8,15 +8,23 @@
     <% search_url = controller.action_name != "ghost" ? projects_path : project_ghost_url%>
     <div class="row">
       <div class="col-3">
+
         <%= form_with(url: search_url, method: :get) do |form| %>
+        <%= form.label :name, "Project name:", class: "block mb-2" %>
+        <%= form.text_field :name, class: "form-control", autocomplete: "off" %>
 
-        <%= form.label :query, "Search by project name:", class: "block mb-2" %>
+        <%= form.label :language_id, style: "display: block" %>
+        <%= form.select("language_id", @language_choices, {include_blank: true}, { class: "form-control" }) %>
 
-        <%= form.text_field :query, class: "form-control", autocomplete: "off" %>
+        
+        </div>
+        <div class="col-3">
+          <%= form.label :description, style: "display: block" %>
+          <%= form.text_area :body, class:"form-control",  autocomplete: "off" %>
 
-        <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
+          <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
+        </div>
         <% end %>
-      </div>
     </div>
     
     <div id="projects">

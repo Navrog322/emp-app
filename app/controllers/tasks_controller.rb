@@ -6,10 +6,10 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    if params[:query].present?
-      @tasks = search(params[:query], only_deleted_flag: false)
-    else
-      @tasks = Task.all
+    data = {name: is_like(params[:name]), body: is_like(params[:body])} 
+    @tasks = search(data, {only_deleted_flag: false})
+    if params[:is_completed].present?
+      @tasks = @tasks.where("is_completed = ?", params[:is_completed])
     end
     @tasks = @tasks.page(params[:page])
   end
@@ -101,11 +101,11 @@ class TasksController < ApplicationController
       @employee_choices = Employee.all.map{|e| [helpers.full_name(e), e.id]}
     end
 
-    def search q, options={only_deleted_flag: false}
+    def search data, options={only_deleted_flag: false}
       if options[:only_deleted_flag]
-        Task.only_deleted.where("name LIKE ?", "%#{q}%")
+        Task.only_deleted.where(["name LIKE :name and body LIKE :body", data])
       else
-        Task.where("name LIKE ?", "%#{q}%")
+        Task.where(["name LIKE :name and body LIKE :body", data])
       end
     end
 

@@ -15,7 +15,6 @@ class EmployeesController < ApplicationController
     if params[:employment_status_id].present?
       @employees = @employees.joins(:employment_status).where("employment_statuses.id = ?", params[:employment_status_id])
     end
-    #@employees = @employees.joins(:employment_status).where("employment_statuses.name = ?", "Active")
     @employees = @employees.page(params[:page])
   end
 

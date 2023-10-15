@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ edit update destroy ]
-  before_action :set_language_choices, only: %i[ new edit update destroy create ]
+  before_action :set_language_choices
   before_action :set_supervisor_employee_choices, only: %i[ new edit update destroy create ]
   before_action :set_unscoped_project, only: %i[ show restore ]
 
@@ -8,10 +8,10 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    if params[:query].present?
-      @projects = search(params[:query], only_deleted_flag: false)
-    else
-      @projects = Project.all
+    data = {name: is_like(params[:name]), body: is_like(params[:body])} 
+    @projects = search(data, {only_deleted_flag: false})
+    if params[:language_id].present?
+      @projects = @projects.where("language_id = ?", params[:language_id])
     end
     @projects = @projects.page(params[:page])
   end
@@ -31,10 +31,10 @@ class ProjectsController < ApplicationController
   end
 
   def ghost 
-    if params[:query].present?
-      @projects = search(params[:query], only_deleted_flag: true)
-    else
-      @projects = Project.only_deleted
+    data = {name: is_like(params[:name]), body: is_like(params[:body])} 
+    @projects = search(data, {only_deleted_flag: true})
+    if params[:language_id].present?
+      @projects = @projects.where("language_id = ?", params[:language_id])
     end
     @projects = @projects.page(params[:page])
     render :index
@@ -109,11 +109,11 @@ class ProjectsController < ApplicationController
       @language_choices = Language.all.pluck(:name, :id)
     end
 
-    def search(q, options={only_deleted_flag: false})
+    def search data, options={only_deleted_flag: false}
       if options[:only_deleted_flag]
-        Project.only_deleted.where("name LIKE ?", "%#{q}%")
+        Project.only_deleted.where(["name LIKE :name and body LIKE :body", data])
       else
-        Project.where("name LIKE ?", "%#{q}%")
+        Project.where(["name LIKE :name and body LIKE :body", data])
       end
     end
     
