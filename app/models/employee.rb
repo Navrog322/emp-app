@@ -8,11 +8,12 @@ class Employee < ApplicationRecord
   belongs_to :employment_status
   has_many :projects_under_supervision, class_name:"Project", foreign_key:"supervisor_id"
   has_many :tasks
+  has_many :projects, through: :tasks
 
   
   include SoftDeletable
 
-  validates :JMBG, presence: true, format: { with: /\d{13}/,
+  validates :JMBG, presence: true, uniqueness: true, format: { with: /\d{13}/,
   message: "needs to have 13 numbers" }
 
   validates :first_name, presence: true, length: { in: 2..20 }

@@ -5,6 +5,8 @@
 
     <h1 class="title">Employees</h1>
 
+    
+
     <div id="employees">
       <%= render partial: "shared/employees_table", locals: {employees: @employees} %>
       <%= paginate @employees, window: 2 %> 

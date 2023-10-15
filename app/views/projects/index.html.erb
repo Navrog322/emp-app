@@ -11,6 +11,11 @@
     </div>
     
     <%= link_to "New project", new_project_path %> |
-    <%= link_to "Show deleted projects", project_ghost_url %> 
+    <% if controller.action_name != "ghost" %>
+      <%= link_to "Show deleted projects", project_ghost_url %>
+    <% else %>
+     <%= link_to "Back to projects", projects_path %>
+    <% end %>
+   
   </div>
 </div>

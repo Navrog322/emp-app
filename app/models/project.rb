@@ -4,7 +4,7 @@ class Project < ApplicationRecord
   
   belongs_to :language
   belongs_to :supervisor, class_name: "Employee"
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 
   include SoftDeletable
 
