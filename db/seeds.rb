@@ -7,6 +7,25 @@
 #   Character.create(name: "Luke", movie: movies.first)
 require 'faker'
 
+def generate_valid_jmbg date 
+  day = date.day.to_s.rjust(2, "0")
+  month = date.month.to_s.rjust(2, "0")
+  year = (date.year%1000).to_s.rjust(3, "0")
+  region = rand(99).to_s.rjust(2, "0")
+  birth_number = rand(999).to_s.rjust(3, "0")
+  first_twelve = day+month+year+region+birth_number
+
+  arr = first_twelve.split("").map(&:to_i)
+  sum = 0
+  6.times do |i|
+    sum += (7-i)*(arr[i]+arr[6+i])
+  end
+  control_digit = 11 - ((sum)%11)
+  control_digit = 0 if control_digit == 11 || control_digit == 10
+  return first_twelve+control_digit.to_s
+end
+
+
 Position.create({
   name: "Junior",
   super: false
@@ -46,9 +65,9 @@ end
 
   first_name = Faker::Name.first_name 
   last_name = Faker::Name.last_name 
-  jmbg = 13.times.map { rand(10) }.join
   address = Faker::Address.street_address
   date = Faker::Date.between(from: '2014-09-23', to: '2020-09-25')
+  jmbg = generate_valid_jmbg(date)
   email = Faker::Internet.email(name: first_name)
   position_id = Position.pluck(:id).sample
   employment_status_id = EmploymentStatus.pluck(:id).sample
@@ -98,3 +117,4 @@ end
   })
   p task.errors unless task.errors.empty?
 end
+

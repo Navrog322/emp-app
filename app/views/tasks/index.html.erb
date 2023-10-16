@@ -6,28 +6,38 @@
   <div class="col-10">
     <h1>Tasks</h1>
       <div class="row">
-        <div class="col-3">
-        <%= form_with(url: search_url, method: :get, class: "form-inline", data: {turbo_frame: "tasks", turbo_action: "advance"}) do |form| %>
-        <div class="form-group">
-          <%= form.label :name, "Name", style:"display: none;" %>
-          <%= form.text_field :name, class: "form-control", autocomplete: "off", placeholder:"Name" %>
-        </div>
-
-        <div class="form-group">
-          <%= form.label "Is completed?", style:"display: none;" %>
-          <%= form.select :is_completed, [["Is completed?", ""], ["Yes", 1], ["No", 0]],{}, class: "form-control" %>
-        </div>
-      
-        <div class="form-group">
-          <%= form.label :body, style: "display: none" %>
-          <%= form.text_area :body, class: "form-control", placeholder:"Description"  %>
-        </div>
-
         
+        <%= form_with(url: search_url, method: :get, class: "", data: {turbo_frame: "tasks"}) do |form| %>
+          <div class="row">
+            <div class="col-3">
+              <div class="form-group">
+                <%= form.label :name, "Name", style: "display: block" %>
+                <%= form.text_field :name, class: "form-control", autocomplete: "off" %>
+              </div>
 
-        <%= form.submit 'Search', class: "btn btn-primary" %>
+              <div class="form-group">
+                <%= form.label "Is completed?", style:"display: block;" %>
+                <%= form.select :is_completed, [["---Choose an option---", ""], ["Yes", 1], ["No", 0]],{}, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="form-group">
+                <%= form.label :body, style: "display: block" %>
+                <%= form.text_field :body, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= form.label :project_id, style: "display: block" %>
+                <%= form.select :project_id, @project_choices, {}, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="col-3" style="margin-top: 20px">
+              <%= form.submit 'Search', class: "btn btn-primary search-btn" %>
+            </div>
+          </div>
         <% end %>
-        </div>
+        
       </div>
 
 

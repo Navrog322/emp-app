@@ -15,20 +15,25 @@ class Employee < ApplicationRecord
 
   validates :JMBG, presence: true, uniqueness: true, format: { with: /\d{13}/,
   message: "needs to have 13 numbers" }
+  
 
   validates :first_name, presence: true, length: { in: 2..20 }
   validates :last_name, presence: true, length: { in: 2..20 }
   validates_format_of :first_name, :last_name, with: /\A[a-z]+\z/i
 
-  validates :email, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}\z/, message: "Invalid format" }
+  validates :email, presence: true, uniqueness: true, format: 
+            { with: /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}\z/, 
+             message: "Invalid format" }
 
   validates :address, presence: true, length: { in: 5..80 }
   validates :position_id, presence: true
   validates :employment_status_id, presence: true
   validates :employment_date, presence: true
+
   validate :superior_id_must_correspond_to_valid_employee
   validate :position_id_must_correspond_to_valid_position
   validate :employment_status_id_must_correspond_to_valid_employment_status
+  validate :validate_jmbg
 
   def date_must_be_in_the_past
     if employment_date.present? && employment_date > Date.today
@@ -87,6 +92,28 @@ class Employee < ApplicationRecord
       end
     }
   end
+
+  def validate_jmbg
+    if self.JMBG.length != 13
+      self.errors.add(:JMBG, "must be valid")
+      return false 
+    end
+    day = self.JMBG[0..1].to_i
+    month = self.JMBG[2..3].to_i
+    year = self.JMBG[4..6].to_i
+    unless Date.valid_date?(year, month, day)
+      self.errors.add(:JMBG, "must be valid")
+      return false
+    end
+    arr = self.JMBG.split("").map(&:to_i)
+    sum = 0
+    6.times do |i|
+      sum += (7-i)*(arr[i]+arr[6+i])
+    end
+    control_digit = 11 - ((sum)%11)
+    control_digit = 0 if control_digit == 11 || control_digit == 10
+    self.errors.add(:JMBG, "must be valid") unless control_digit == arr[12]  
+  end          
   
 
   private

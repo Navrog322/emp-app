@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
   before_action :set_language_choices, only: %i[ new edit update create] 
   before_action :set_langugage_choices_with_default, only: %i[ index show restore ghost ]
   before_action :set_supervisor_employee_choices, only: %i[ new edit update destroy create ]
+  before_action :set_supervisor_employee_choices_with_default, only: %i[ index show restore ghost ]
   before_action :set_unscoped_project, only: %i[ show restore ]
 
   
@@ -13,6 +14,9 @@ class ProjectsController < ApplicationController
     @projects = search(data, {only_deleted_flag: false})
     if params[:language_id].present?
       @projects = @projects.where("language_id = ?", params[:language_id])
+    end
+    if params[:supervisor_id].present?
+      @projects = @projects.where("supervisor_id = ?", params[:supervisor_id])
     end
     @projects = @projects.page(params[:page])
     if turbo_frame_request? 
@@ -39,6 +43,9 @@ class ProjectsController < ApplicationController
     @projects = search(data, {only_deleted_flag: true})
     if params[:language_id].present?
       @projects = @projects.where("language_id = ?", params[:language_id])
+    end
+    if params[:supervisor_id].present?
+      @projects = @projects.where("supervisor_id = ?", params[:supervisor_id])
     end
     @projects = @projects.page(params[:page])
     if turbo_frame_request? 
@@ -111,6 +118,10 @@ class ProjectsController < ApplicationController
 
     def set_supervisor_employee_choices
       @supervisor_employee_choices = Employee.all.map{|e| [helpers.full_name(e), e.id]}
+    end
+
+    def set_supervisor_employee_choices_with_default
+      @supervisor_employee_choices = Employee.all.map{|e| [helpers.full_name(e), e.id]}.prepend(["---Choose a supervisor---", ""])
     end
 
     def set_language_choices

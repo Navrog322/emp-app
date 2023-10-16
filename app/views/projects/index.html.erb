@@ -10,24 +10,27 @@
       
 
       <%= form_with(url: search_url, method: :get,  data: {turbo_frame: "projects"}) do |form| %>
-      <div class="row">
-        <div class="col-3">
-          <%= form.label :name, "Project name:", class: "block mb-2" %>
-          <%= form.text_field :name, class: "form-control", autocomplete: "off" %>
+        <div class="row">
+          <div class="col-3">
+            <%= form.label :name, "Project name:", class: "block" %>
+            <%= form.text_field :name, class: "form-control", autocomplete: "off" %>
 
-          <%= form.label :language_id, style: "display: block" %>
-          <%= form.select("language_id", @language_choices, {}, { class: "form-control" }) %>
-        </div>
-        
-        <div class="col-3">
-          <%= form.label :description, style: "display: block" %>
-          <%= form.text_area :body, class:"form-control",  autocomplete: "off" %>
-        </div>
+            <%= form.label :language_id, style: "display: block" %>
+            <%= form.select("language_id", @language_choices, {}, { class: "form-control" }) %>
+          </div>
 
-        <div class="col-3" style="margin-top: 20px">
-           <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
+          <div class="col-3">
+            <%= form.label :description, style: "display: block" %>
+            <%= form.text_field :body, class:"form-control",  autocomplete: "off" %>
+
+            <%= form.label :supervisor_id, style: "display: block" %>
+            <%= form.select("supervisor_id", @supervisor_employee_choices, {}, { :class => "form-control" }) %>
+          </div>
+
+          <div class="col-3" style="margin-top: 20px">
+             <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
+          </div>
         </div>
-      </div>
       <% end %>
       
     </div>

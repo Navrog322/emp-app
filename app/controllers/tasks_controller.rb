@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
   before_action :set_project_choices, only: %i[ new edit update destroy create ]
+  before_action :set_project_choices_with_default, only: %i[ index show restore ghost ]
   before_action :set_employee_choices, only: %i[ new edit update destroy create ]
   before_action :set_unscoped_task, only: %i[ show restore ]
 
@@ -10,6 +11,9 @@ class TasksController < ApplicationController
     @tasks = search(data, {only_deleted_flag: false})
     if params[:is_completed].present?
       @tasks = @tasks.where("is_completed = ?", params[:is_completed])
+    end
+    if params[:project_id].present? 
+      @tasks = @tasks.where("project_id = ?", params[:project_id])
     end
     @tasks = @tasks.page(params[:page])
     if turbo_frame_request?
@@ -39,6 +43,10 @@ class TasksController < ApplicationController
     if params[:is_completed].present?
       @tasks = @tasks.where("is_completed = ?", params[:is_completed])
     end
+    if params[:project_id].present? 
+      @tasks = @tasks.where("project_id = ?", params[:project_id])
+    end
+    @tasks = @tasks.page(params[:page])
     if turbo_frame_request?
       render partial: "tasks", locals: { tasks: @tasks }
     else
@@ -103,6 +111,10 @@ class TasksController < ApplicationController
 
     def set_project_choices
       @project_choices = Project.pluck(:name, :id)
+    end
+
+    def set_project_choices_with_default
+      @project_choices = Project.pluck(:name, :id).prepend(["---Choose a project---", ""])
     end
 
     def set_employee_choices
