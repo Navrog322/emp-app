@@ -30,3 +30,7 @@ nav.pagination{
   gap: 10px;
 }
 
+select {
+  -webkit-appearance: listbox !important;
+  }
+

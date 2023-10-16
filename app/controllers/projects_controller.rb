@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: %i[ edit update destroy ]
-  before_action :set_language_choices
+  before_action :set_language_choices, only: %i[ new edit update create] 
+  before_action :set_langugage_choices_with_default, only: %i[ index show restore ghost ]
   before_action :set_supervisor_employee_choices, only: %i[ new edit update destroy create ]
   before_action :set_unscoped_project, only: %i[ show restore ]
 
@@ -14,11 +15,14 @@ class ProjectsController < ApplicationController
       @projects = @projects.where("language_id = ?", params[:language_id])
     end
     @projects = @projects.page(params[:page])
+    if turbo_frame_request? 
+      render partial: "projects", locals:{ projects: @projects }
+    end
   end
 
   # GET /projects/1 or /projects/1.json
   def show
-    redirect_to action: "ghost" unless @project.is_deleted == false 
+    redirect_to action: "ghost" if @project.is_deleted
   end
 
   # GET /projects/new
@@ -37,7 +41,11 @@ class ProjectsController < ApplicationController
       @projects = @projects.where("language_id = ?", params[:language_id])
     end
     @projects = @projects.page(params[:page])
-    render :index
+    if turbo_frame_request? 
+      render partial: "projects", locals:{ projects: @projects }
+    else
+      render :index
+    end
   end
 
   def restore 
@@ -106,7 +114,11 @@ class ProjectsController < ApplicationController
     end
 
     def set_language_choices
-      @language_choices = Language.all.pluck(:name, :id)
+      @language_choices = Language.pluck(:name, :id)
+    end
+
+    def set_langugage_choices_with_default
+      @language_choices = Language.pluck(:name, :id).prepend(["---Choose a language---", ""])
     end
 
     def search data, options={only_deleted_flag: false}

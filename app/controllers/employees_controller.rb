@@ -1,9 +1,11 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ edit update destroy ]
-  before_action :set_superior_employee_choices, only: %i[ new edit update destroy create]
-  before_action :set_position_choices
-  before_action :set_employment_status_choices
-  before_action :set_unscoped_employee, only: %i[show restore]
+  before_action :set_superior_employee_choices, only: %i[ new edit update destroy create ]
+  before_action :set_position_choices, only: %i[ new edit update create ]
+  before_action :set_position_choices_with_default, only: %i[ index show restore ghost ]
+  before_action :set_employment_status_choices, only: %i[ new edit update create] 
+  before_action :set_employment_status_choices_with_default, only: %i[ index show restore ghost ]
+  before_action :set_unscoped_employee, only: %i[ show restore ]
   # GET /employees or /employees.json
   def index
     data = {first_name: is_like(params[:first_name]), last_name: is_like(params[:last_name])} 
@@ -16,6 +18,12 @@ class EmployeesController < ApplicationController
       @employees = @employees.joins(:employment_status).where("employment_statuses.id = ?", params[:employment_status_id])
     end
     @employees = @employees.page(params[:page])
+
+    if turbo_frame_request?
+      render partial: "employees", locals: { employees: @employees }
+    else
+      render :index
+    end
   end
 
   # GET /employees/1 or /employees/1.json
@@ -45,9 +53,12 @@ class EmployeesController < ApplicationController
     if params[:employment_status_id].present?
       @employees = @employees.joins(:employment_status).where("employment_statuses.id = ?", params[:employment_status_id])
     end
-    #@employees = @employees.joins(:employment_status).where("employment_statuses.name = ?", "Active")
     @employees = @employees.page(params[:page])
-    render :index
+    if turbo_frame_request?
+      render partial: "employees", locals: { employees: @employees }
+    else
+      render :index
+    end
   end
 
   def restore
@@ -108,14 +119,23 @@ class EmployeesController < ApplicationController
 
     def set_superior_employee_choices
       @superior_employee_choices = Employee.where(positions: valid_positions_for_superiors_ids).map {|e| [ helpers.full_name(e), e.id ] }
+      @superior_employee_choices.prepend(["---Choose a superior---",""])
     end
 
     def set_position_choices
       @position_choices = Position.pluck(:name, :id)
     end
+
+    def set_position_choices_with_default
+      @position_choices = Position.pluck(:name, :id).prepend(["---Choose a position---",""])
+    end
     
     def set_employment_status_choices
-      @employment_status_choices = EmploymentStatus.all.map{|es| [ es.name, es.id ] }
+      @employment_status_choices = EmploymentStatus.pluck(:name, :id)
+    end
+
+    def set_employment_status_choices_with_default
+      @employment_status_choices = EmploymentStatus.pluck(:name, :id).prepend(["---Choose a status---",""])
     end
 
     def valid_positions_for_superiors_ids

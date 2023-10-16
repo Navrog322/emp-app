@@ -1,3 +1,4 @@
+<%= turbo_frame_tag "employees" do %>
 <table class="table">
 <thead>
     <tr>
@@ -22,19 +23,20 @@
       <td><%= employee.last_name %></td>
       <td><%= employee.email %></td>
       <td><%= employee.address%></td>
-      <td><%= link_to employee.position.name, position_path(employee.position) %></td>
+      <td><%= link_to employee.position.name, position_path(employee.position), data: { turbo_frame: "_top" } %></td>
       <%if employee.superior_id. != nil%>
-      <td><%= link_to full_name(employee.superior), employee_path(employee.superior_id) %></td>
+      <td><%= link_to full_name(employee.superior), employee_path(employee.superior_id), data: { turbo_frame: "_top" } %></td>
       <% else %>
       <td></td>
       <%end%>
       <td><%= employee.employment_date %></td>
-      <td><%= link_to employee.employment_status.name, employment_status_path(employee.employment_status)%></td>
+      <td><%= link_to employee.employment_status.name, employment_status_path(employee.employment_status), data: { turbo_frame: "_top" }%></td>
       <%if controller.action_name != "ghost" %>
       <td class="item-link"><%= link_to "Show" , employee_path(employee), data: { turbo_frame: "_top" } %></td>
       <%else%>
-      <td class="item-link"><%= link_to "Restore", employee_restore_url(employee.id) %></td>
+      <td class="item-link"><%= link_to "Restore", employee_restore_url(employee.id), data: { turbo_frame: "_top" } %></td>
       <%end%>
     </tr>
     <%end%>
 </table>
+<% end %>

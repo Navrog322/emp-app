@@ -16,12 +16,12 @@
       <td><%= task.name %></td>
       <td><%= task.body %></td>
       <td><%= yes_or_no(task.is_completed) %></td>
-      <td><%= link_to task.project.name, project_path(task.project) %></td>
-      <td><%= link_to full_name(task.employee), employee_path(task.employee) %></td>
+      <td><%= link_to task.project.name, project_path(task.project), data: { turbo_frame: "_top" } %></td>
+      <td><%= link_to full_name(task.employee), employee_path(task.employee), data: { turbo_frame: "_top" } %></td>
       <%if controller.action_name != "ghost" %>
-      <td class="item-link"><%= link_to "Show", task_path(task.id) %></td>
+      <td class="item-link"><%= link_to "Show", task_path(task.id), data: { turbo_frame: "_top" } %></td>
       <%else%>
-      <td class="item-link"><%= link_to "Restore", task_restore_url(task.id) %></td>
+      <td class="item-link"><%= link_to "Restore", task_restore_url(task.id), data: { turbo_frame: "_top" } %></td>
       <%end%>
       
       

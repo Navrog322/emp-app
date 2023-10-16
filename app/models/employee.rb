@@ -26,7 +26,6 @@ class Employee < ApplicationRecord
   validates :position_id, presence: true
   validates :employment_status_id, presence: true
   validates :employment_date, presence: true
-  validate :date_must_be_in_the_past
   validate :superior_id_must_correspond_to_valid_employee
   validate :position_id_must_correspond_to_valid_position
   validate :employment_status_id_must_correspond_to_valid_employment_status

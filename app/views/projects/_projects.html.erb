@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "projects" do %>
+<div id="projects">
+    <%= render partial: "shared/projects_table", locals:{projects: projects}%>
+    <%= paginate projects, window: 2 %> 
+</div>
+<% end %>

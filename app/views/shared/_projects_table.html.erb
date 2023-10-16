@@ -17,11 +17,11 @@
       <td><%= project.body %></td>
       <td><%= project.language.name %></td>
       <td><%= project.tasks.count %></td>
-      <td><%= link_to full_name(project.supervisor), employee_path(project.supervisor) %></td>
+      <td><%= link_to full_name(project.supervisor), employee_path(project.supervisor), data: { turbo_frame: "_top" } %></td>
       <%if controller.action_name != "ghost" %>
-      <td class="item-link"><%= link_to "Show", project_path(project.id) %></td>
+      <td class="item-link"><%= link_to "Show", project_path(project.id), data: { turbo_frame: "_top" } %></td>
       <%else%>
-      <td class="item-link"><%= link_to "Restore", project_restore_url(project.id) %></td>
+      <td class="item-link"><%= link_to "Restore", project_restore_url(project.id), data: { turbo_frame: "_top" } %></td>
       <%end%>
       
       

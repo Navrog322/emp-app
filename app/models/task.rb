@@ -2,6 +2,11 @@ class Task < ApplicationRecord
   belongs_to :project
   belongs_to :employee
 
+  validates :name, presence: true
+  validates :body, presence: true
+  validates :employee_id, presence: true
+  validates :project_id, presence: true
+
   paginates_per 10
   include SoftDeletable
 

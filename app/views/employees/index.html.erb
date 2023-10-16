@@ -7,45 +7,42 @@
 
 
     <% search_url = controller.action_name != "ghost" ? employees_path : employee_ghost_url%>
+
     <div class="row">
-      <div class="col-3">
-        <%= form_with(url: search_url, method: :get) do |form| %>
+      <%= form_with(url: search_url, method: :get, data: {turbo_frame: "employees"}) do |form| %>
 
-        <%= form.label :first_name, "First name:", class: "" %>
-        <%= form.text_field :first_name, class: "form-control", autocomplete: "off" %>
+        <div class="row">
+          <div class="col-3">
+            <%= form.label :first_name, "First name:", class: "" %>
+            <%= form.text_field :first_name, class: "form-control", autocomplete: "off" %>
 
-        <%= form.label :last_name, "Last name:", class: "" %>
-        <%= form.text_field :last_name, class: "form-control", autocomplete: "off" %>
-      </div>
-      <div class="col-3">
-        <%= form.label :position, "Position", class: "" %>
-        <%= form.select("position_id", @position_choices, {include_blank: true}, { :class => "form-control" })%>
+            <%= form.label :last_name, "Last name:", class: "" %>
+            <%= form.text_field :last_name, class: "form-control", autocomplete: "off" %>
+          </div>
+          <div class="col-3">
+            <%= form.label :position, "Position", class: "" %>
+            <%= form.select("position_id", @position_choices, {}, { :class => "form-control" })%>
 
-        <%= form.label :employment_status, "Employment_status", class: "" %>
-        <%= form.select("employment_status_id", @employment_status_choices, {include_blank: true}, { :class => "form-control" }) %>
-      </div>
+            <%= form.label :employment_status, "Employment status", class: "" %>
+            <%= form.select("employment_status_id", @employment_status_choices,{}, { :class => "form-control" }) %>
+          </div>
       
         <div class="col-3" style="margin-top: 20px">
-        <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
-        <% end %>
-      </div>
-      
-    </div>
-    
-    
+          <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
+        </div>
 
-    <div id="employees">
-        <%= render partial: "shared/employees_table", locals: {employees: @employees} %>
-        <%= paginate @employees, window: 2 %> 
-     
-    </div>
+      <% end %>  
+    </div> 
+  </div>
+    
+    <%= render partial: "employees", locals: {employees: @employees} %>
 
     <%= link_to "New employee", new_employee_path %> |
 
     <% if controller.action_name != "ghost" %>
-    <%= link_to "Show deleted employees", employee_ghost_url %>
+      <%= link_to "Show deleted employees", employee_ghost_url %>
     <% else %>
-    <%= link_to "Back to employees", employees_path %>
+      <%= link_to "Back to employees", employees_path %>
     <% end %>
 
   </div>

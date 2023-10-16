@@ -12,6 +12,11 @@ class TasksController < ApplicationController
       @tasks = @tasks.where("is_completed = ?", params[:is_completed])
     end
     @tasks = @tasks.page(params[:page])
+    if turbo_frame_request?
+      render partial: "tasks", locals: { tasks: @tasks }
+    else
+      render :index
+    end
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -29,13 +34,16 @@ class TasksController < ApplicationController
   end
 
   def ghost
-    if params[:query].present?
-      @tasks = search(params[:query], only_deleted_flag: true)
-    else
-      @tasks = Task.only_deleted
+    data = {name: is_like(params[:name]), body: is_like(params[:body])} 
+    @tasks = search(data, {only_deleted_flag: true})
+    if params[:is_completed].present?
+      @tasks = @tasks.where("is_completed = ?", params[:is_completed])
     end
-    @tasks = @tasks.page(params[:page])
-    render :index
+    if turbo_frame_request?
+      render partial: "tasks", locals: { tasks: @tasks }
+    else
+      render :index
+    end
   end
 
   def restore 

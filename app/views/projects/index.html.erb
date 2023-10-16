@@ -7,36 +7,38 @@
 
     <% search_url = controller.action_name != "ghost" ? projects_path : project_ghost_url%>
     <div class="row">
-      <div class="col-3">
+      
 
-        <%= form_with(url: search_url, method: :get) do |form| %>
-        <%= form.label :name, "Project name:", class: "block mb-2" %>
-        <%= form.text_field :name, class: "form-control", autocomplete: "off" %>
+      <%= form_with(url: search_url, method: :get,  data: {turbo_frame: "projects"}) do |form| %>
+      <div class="row">
+        <div class="col-3">
+          <%= form.label :name, "Project name:", class: "block mb-2" %>
+          <%= form.text_field :name, class: "form-control", autocomplete: "off" %>
 
-        <%= form.label :language_id, style: "display: block" %>
-        <%= form.select("language_id", @language_choices, {include_blank: true}, { class: "form-control" }) %>
-
-        
+          <%= form.label :language_id, style: "display: block" %>
+          <%= form.select("language_id", @language_choices, {}, { class: "form-control" }) %>
         </div>
+        
         <div class="col-3">
           <%= form.label :description, style: "display: block" %>
           <%= form.text_area :body, class:"form-control",  autocomplete: "off" %>
-
-          <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
         </div>
-        <% end %>
+
+        <div class="col-3" style="margin-top: 20px">
+           <%= form.submit 'Search', class: "btn btn-primary search-btn input-field" %>
+        </div>
+      </div>
+      <% end %>
+      
     </div>
     
-    <div id="projects">
-      <%= render partial: "shared/projects_table", locals:{projects: @projects}%>
-      <%= paginate @projects, window: 2 %> 
-    </div>
+    <%= render partial: "projects", locals:{projects: @projects}%>
     
     <%= link_to "New project", new_project_path %> |
     <% if controller.action_name != "ghost" %>
       <%= link_to "Show deleted projects", project_ghost_url %>
     <% else %>
-     <%= link_to "Back to projects", projects_path %>
+      <%= link_to "Back to projects", projects_path %>
     <% end %>
    
   </div>

@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "employees" do %>
+      <div id="employees">
+      <%= render partial: "shared/employees_table", locals: {employees: @employees} %>
+      <%= paginate employees, window: 2 %> 
+      </div>
+  <% end %>
