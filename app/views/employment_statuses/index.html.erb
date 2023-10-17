@@ -3,7 +3,11 @@
   <div class="col-4">
     <p style="color: green"><%= notice %></p>
 
-    <h1 class="title">Employment statuses</h1>
+    <%if controller.action_name != "ghost" %>
+      <h1 class="title">Employment statuses</h1>
+      <%else%>
+      <h1 class="title">Deleted Employment statuses</h1>
+    <%end%>
 
     <div id="employment_statuses">
       <%= render partial: "employment_statuses_table", locals: {statuses: @employment_statuses}%>

@@ -4,7 +4,11 @@
 <% search_url = controller.action_name != "ghost" ? tasks_path : task_ghost_url%>
 <div class="row d-flex justify-content-center">
   <div class="col-10">
-    <h1>Tasks</h1>
+    <%if controller.action_name != "ghost" %>
+      <h1 class="title">Tasks</h1>
+      <%else%>
+      <h1 class="title">Deleted tasks</h1>
+    <%end%>
       <div class="row">
         
         <%= form_with(url: search_url, method: :get, class: "", data: {turbo_frame: "tasks"}) do |form| %>
@@ -16,14 +20,14 @@
               </div>
 
               <div class="form-group">
-                <%= form.label "Is completed?", style:"display: block;" %>
+                <%= form.label "Is task completed?", style:"display: block;" %>
                 <%= form.select :is_completed, [["---Choose an option---", ""], ["Yes", 1], ["No", 0]],{}, class: "form-control" %>
               </div>
             </div>
 
             <div class="col-3">
               <div class="form-group">
-                <%= form.label :body, style: "display: block" %>
+                <%= form.label :description, style: "display: block" %>
                 <%= form.text_field :body, class: "form-control" %>
               </div>
               <div class="form-group">

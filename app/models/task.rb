@@ -13,7 +13,7 @@ class Task < ApplicationRecord
   def project 
     Project.unscoped{
       if super.is_deleted
-        super.name = "-deleted-"
+        super.name += " (deleted)"
         super
       else
         super   
@@ -24,8 +24,7 @@ class Task < ApplicationRecord
   def employee 
     Employee.unscoped{
       if super.is_deleted 
-        super.first_name = "-deleted-"
-        super.last_name = ""
+        super.last_name += " (deleted)"
         super
       else
         super 

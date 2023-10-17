@@ -66,7 +66,7 @@ class EmploymentStatusesController < ApplicationController
     @employment_status.destroy
 
     respond_to do |format|
-      format.html { redirect_to employment_statuses_url, notice: "Employment status was successfully destroyed." }
+      format.html { redirect_to employment_statuses_url, notice: "Employment status was successfully deleted." }
       format.json { head :no_content }
     end
   end

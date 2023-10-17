@@ -34,8 +34,8 @@ class EmploymentStatusesTest < ApplicationSystemTestCase
 
   test "should destroy Employment status" do
     visit employment_status_url(@employment_status)
-    click_on "Destroy this employment status", match: :first
+    click_on "Delete this employment status", match: :first
 
-    assert_text "Employment status was successfully destroyed"
+    assert_text "Employment status was successfully deleted"
   end
 end

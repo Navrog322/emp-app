@@ -31,8 +31,7 @@ class Project < ApplicationRecord
   def supervisor
     Employee.unscoped{
       if(!super.nil? && super.is_deleted == true) 
-        super.first_name = "-deleted-"
-        super.last_name = ""
+        super.last_name += " (deleted)"
         super
       else 
         return super

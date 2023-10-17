@@ -50,8 +50,8 @@ class EmployeesTest < ApplicationSystemTestCase
 
   test "should destroy Employee" do
     visit employee_url(@employee)
-    click_on "Destroy this employee", match: :first
+    click_on "Delete this employee", match: :first
 
-    assert_text "Employee was successfully destroyed"
+    assert_text "Employee was successfully deleted"
   end
 end

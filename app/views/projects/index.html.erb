@@ -3,7 +3,11 @@
   <div class="col-10">
     <p style="color: green"><%= notice %></p>
     
-    <h1 class="title">Projects</h1>
+    <%if controller.action_name != "ghost" %>
+      <h1 class="title">Projects</h1>
+      <%else%>
+      <h1 class="title">Deleted Projects</h1>
+    <%end%>
 
     <% search_url = controller.action_name != "ghost" ? projects_path : project_ghost_url%>
     <div class="row">

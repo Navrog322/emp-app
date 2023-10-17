@@ -34,8 +34,8 @@ class PositionsTest < ApplicationSystemTestCase
 
   test "should destroy Position" do
     visit position_url(@position)
-    click_on "Destroy this position", match: :first
+    click_on "Delete this position", match: :first
 
-    assert_text "Position was successfully destroyed"
+    assert_text "Position was successfully deleted"
   end
 end

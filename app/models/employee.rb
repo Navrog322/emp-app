@@ -19,7 +19,7 @@ class Employee < ApplicationRecord
 
   validates :first_name, presence: true, length: { in: 2..20 }
   validates :last_name, presence: true, length: { in: 2..20 }
-  validates_format_of :first_name, :last_name, with: /\A[a-z]+\z/i
+  #validates_format_of :first_name, :last_name, with: /\A[a-z]+\z/i
 
   validates :email, presence: true, uniqueness: true, format: 
             { with: /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}\z/, 
@@ -62,7 +62,7 @@ class Employee < ApplicationRecord
   def position
     Position.unscoped{
       if(!super.nil? && super.is_deleted == true) 
-        super.name = "-deleted-"
+        super.name+= " (deleted)"
         super
       else 
         return super
@@ -73,7 +73,7 @@ class Employee < ApplicationRecord
   def employment_status
     EmploymentStatus.unscoped{
       if(!super.nil? && super.is_deleted == true) 
-        super.name = "-deleted-"
+        super.name += " (deleted)"
         super
       else 
         return super
@@ -84,8 +84,7 @@ class Employee < ApplicationRecord
   def superior
     Employee.unscoped{
       if(!super.nil? && super.is_deleted == true) 
-        super.first_name = "-deleted-"
-        super.last_name = ""
+        super.last_name += " (deleted)"
         super
       else 
         return super

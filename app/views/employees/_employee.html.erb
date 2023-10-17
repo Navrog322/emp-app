@@ -33,7 +33,7 @@
        <%= link_to(employee.position.name, position_path(employee.position_id)) %>
      </p>
 
-     <p>
+      <p>
         <strong>Employment date:</strong>
         <%= employee.employment_date %>
       </p>
@@ -41,7 +41,7 @@
       <%if employee.superior_id != nil%>
         <p>
           <strong>Superior:</strong>
-            <%= link_to(full_name(employee.superior), employee_path(employee.superior_id)) %>
+          <%= link_to(full_name(employee.superior), employee_path(employee.superior_id)) %>
         </p>
       <% end %>
 

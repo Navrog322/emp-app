@@ -102,7 +102,7 @@ class EmployeesController < ApplicationController
     @employee.destroy
 
     respond_to do |format|
-      format.html { redirect_to employees_url, notice: "Employee was successfully destroyed." }
+      format.html { redirect_to employees_url, notice: "Employee was successfully deleted." }
       format.json { head :no_content }
     end
   end

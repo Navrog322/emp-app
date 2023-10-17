@@ -42,8 +42,8 @@ class TasksTest < ApplicationSystemTestCase
 
   test "should destroy Task" do
     visit task_url(@task)
-    click_on "Destroy this task", match: :first
+    click_on "Delete this task", match: :first
 
-    assert_text "Task was successfully destroyed"
+    assert_text "Task was successfully deleted"
   end
 end

@@ -16,7 +16,7 @@
     <%end%>
 
     <%if !@employee.tasks.empty?%>
-      <h2>Employee tasks </h2>
+      <h2>Tasks </h2>
         <%= render partial:"shared/tasks_table", locals:{tasks: @employee.tasks}%>
     <%end%>
     
@@ -24,7 +24,7 @@
       <%= link_to "Edit this employee", edit_employee_path(@employee) %> |
       <%= link_to "Back to employees", employees_path %>
 
-      <%= button_to "Destroy this employee", @employee, method: :delete, class:"btn btn-danger" %>
+      <%= button_to "Delete this employee", @employee, method: :delete, class:"btn btn-danger" %>
     </div>
   </div>
 </div>
